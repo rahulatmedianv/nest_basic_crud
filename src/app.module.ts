@@ -6,6 +6,7 @@ import { BlogService } from './blogs/blogs.service';
 import configService from './config/configService';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogEntity } from './blogs/blogs.entity';
+import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { BlogEntity } from './blogs/blogs.entity';
     TypeOrmModule.forFeature([BlogEntity]),
   ],
   controllers: [AppController, BlogsController],
-  providers: [AppService, BlogService],
+  providers: [ResponseInterceptor, AppService, BlogService],
 })
 export class AppModule {}

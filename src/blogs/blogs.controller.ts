@@ -1,22 +1,40 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { BlogService } from './blogs.service';
 import { CreateBlogsDto } from './dto/blogs.dto';
-import type { Response } from 'express';
+import { ResponseMessage } from 'src/common/decorator/response-message.decorator';
 @Controller('blogs')
 export class BlogsController {
   constructor(private readonly blogService: BlogService) {}
 
   @Get()
+  @ResponseMessage('Blog Retrieved Successfully')
   getHello() {
     return this.blogService.getBlogs();
   }
 
   @Post()
-  async create(
-    @Body() data: CreateBlogsDto,
-    @Res() res: Response,
-  ): Promise<any> {
-    await this.blogService.create(data);
-    return res.status(HttpStatus.CREATED).json({ message: 'ok' });
+  @ResponseMessage('Blog Saved Successfully')
+  async create(@Body() data: CreateBlogsDto): Promise<any> {
+    return await this.blogService.create(data);
+  }
+
+  @ResponseMessage('Blog Updated Successfully')
+  @Put(':id')
+  async update(@Body() updatedData: CreateBlogsDto, @Param('id') id: string) {
+    return await this.blogService.updateBlog(updatedData, id);
+  }
+
+  @ResponseMessage('Blog Deleted Successfully')
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return await this.blogService.deleteBlog(id);
   }
 }
