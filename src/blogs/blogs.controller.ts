@@ -7,15 +7,16 @@ export class BlogsController {
   constructor(private readonly blogService: BlogService) {}
 
   @Get()
-  getHello(): string {
-    return this.blogService.getHello();
+  getHello() {
+    return this.blogService.getBlogs();
   }
 
   @Post()
-  create(@Body() data: CreateBlogsDto, @Res() res: Response): any {
-    // return
-    this.blogService.create(data);
-    // return res.send(200).json({ message: 'Ok' });
+  async create(
+    @Body() data: CreateBlogsDto,
+    @Res() res: Response,
+  ): Promise<any> {
+    await this.blogService.create(data);
     return res.status(HttpStatus.CREATED).json({ message: 'ok' });
   }
 }
