@@ -9,6 +9,8 @@ import { BlogEntity } from './blogs/blogs.entity';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { GlobalGuard } from './common/guards/global.guard';
 
 @Module({
   imports: [
@@ -17,10 +19,15 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController, BlogsController],
-  providers: [ResponseInterceptor, AppService, BlogService],
+  providers: [
+    AppService,
+    BlogService,
+    // { provide: APP_GUARD, useClass: GlobalGuard },
+    { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*'); // global middleware
+    consumer.apply(LoggerMiddleware).forRoutes('*'); // global middleware 0(this will always run first in the request lifecycle)
   }
 }

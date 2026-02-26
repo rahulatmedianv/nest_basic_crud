@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { BlogEntity } from 'src/blogs/blogs.entity';
 import { UserEntity } from 'src/auth/auth.entity';
+import { RefreshTokenEntity } from 'src/auth/refreshToken.entity';
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -36,7 +37,7 @@ class ConfigService {
       database: this.getValue('POSTGRES_DATABASE'),
       autoLoadEntities: true,
       synchronize: true, // this will autocreate the table that are in our entity
-      entities: [BlogEntity, UserEntity],
+      entities: [BlogEntity, UserEntity, RefreshTokenEntity],
     };
   }
 }

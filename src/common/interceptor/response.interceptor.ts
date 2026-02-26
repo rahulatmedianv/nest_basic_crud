@@ -12,6 +12,7 @@ import { map, Observable } from 'rxjs';
 export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
   constructor(private readonly reflector: Reflector) {}
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    console.log('04 Global Interceptor | Response Interceptor');
     const message =
       this.reflector.get<string>('responseMessage', context.getHandler()) ||
       'Request successful';

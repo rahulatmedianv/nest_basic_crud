@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { RefreshTokenEntity } from './refreshToken.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity('user')
@@ -30,6 +32,9 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => RefreshTokenEntity, (token) => token.user)
+  refreshTokens: RefreshTokenEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()
