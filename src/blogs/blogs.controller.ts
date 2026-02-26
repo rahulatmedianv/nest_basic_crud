@@ -6,10 +6,12 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { BlogService } from './blogs.service';
 import { CreateBlogsDto } from './dto/blogs.dto';
 import { ResponseMessage } from 'src/common/decorator/response-message.decorator';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 @Controller('blogs')
 export class BlogsController {
   constructor(private readonly blogService: BlogService) {}
@@ -19,7 +21,7 @@ export class BlogsController {
   getHello() {
     return this.blogService.getBlogs();
   }
-
+  @UseGuards(AuthGuard)
   @Post()
   @ResponseMessage('Blog Saved Successfully')
   async create(@Body() data: CreateBlogsDto): Promise<any> {

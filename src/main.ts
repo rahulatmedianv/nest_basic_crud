@@ -15,6 +15,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  // app.useGlobalInterceptors(new ClassSerializerInterceptor(User));
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
