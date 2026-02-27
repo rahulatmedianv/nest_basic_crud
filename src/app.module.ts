@@ -9,8 +9,7 @@ import { BlogEntity } from './blogs/blogs.entity';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-import { GlobalGuard } from './common/guards/global.guard';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [

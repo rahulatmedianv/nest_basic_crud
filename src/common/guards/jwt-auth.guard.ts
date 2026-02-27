@@ -41,7 +41,7 @@ export class JwtAuthGuard implements CanActivate {
       const user = await this.userRepository.findOneBy({ id });
       request['user'] = user;
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log({ error });
       throw new UnauthorizedException('Invalid or expired token');
     }

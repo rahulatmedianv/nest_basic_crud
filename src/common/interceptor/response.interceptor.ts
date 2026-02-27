@@ -17,7 +17,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
       this.reflector.get<string>('responseMessage', context.getHandler()) ||
       'Request successful';
     return next.handle().pipe(
-      map((data) => {
+      map((data: unknown) => {
         const response = context.switchToHttp().getResponse<Response>();
         return {
           statusCode: response.statusCode,
